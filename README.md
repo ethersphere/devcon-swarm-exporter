@@ -67,7 +67,7 @@ This clones the website using `httrack` locally to the `./output/devcon-local` f
 
 ### Run static export rewrites, fixes & optimizations
 ```
-npm start make-static
+npm start export
 ```
 Running this command should fetch missing resources, optimize the nextjs images and update the relevant urls to make the static export work
 
