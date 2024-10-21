@@ -30,4 +30,4 @@ jobs:
             --bee-api-url ${{ secrets.PRIVATE_BEE_URL }} \
             --stamp ${{ secrets.PRIVATE_POSTAGE_BATCH_ID }} \
             --redundancy PARANOID \
-            --yes --curl --verbose
+            --yes
