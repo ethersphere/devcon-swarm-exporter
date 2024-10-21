@@ -19,35 +19,14 @@ jobs:
         run: |
           npm ci
           npm run clone
-          npm run export
+      # Install swarm-cli globally
+      - name: Install swarm-cli
+        run: npm install -g @ethersphere/swarm-cli
+      # Upload the ./output/devcon-local/ directory using swarm-cli
       - name: Upload to Swarm
-        uses: ethersphere/swarm-actions/upload-dir@latest
-        id: upload
-        with:
-          dir: ./output/devcon-local
-          index-document: index.html
-          postage-batch-id: ${{ secrets.PRIVATE_POSTAGE_BATCH_ID }}
-          bee-url: ${{ secrets.PRIVATE_BEE_URL }}
-          timeout: 900000
-          deferred: false
-
-      - name: Setup feed
-        uses: ethersphere/swarm-actions/write-feed@latest
-        id: feed
-        with:
-          reference: ${{ steps.upload.outputs.reference }}
-          topic: "swarm-homepage"
-          postage-batch-id: ${{ secrets.PRIVATE_POSTAGE_BATCH_ID }}
-          bee-url: ${{ secrets.PRIVATE_BEE_URL }}
-          signer: ${{ secrets.PRIVATE_SIGNER }}
-
-      - uses: ethersphere/swarm-actions/reference-to-cid@v0
-        id: cid
-        with:
-          reference: ${{ steps.feed.outputs.manifest }}
-
-      - run: |
-          echo 'Chunk Reference: ${{ steps.upload.outputs.reference }}'
-          echo 'Feed Reference: ${{ steps.feed.outputs.reference }}'
-          echo 'Feed Manifest: ${{ steps.feed.outputs.manifest }}'
-          echo 'Feed Bzz.link: https://${{ steps.cid.outputs.cid }}.bzz.link'
+        run: |
+          swarm-cli upload ./output/devcon-local/ \
+            --bee-api-url ${{ secrets.PRIVATE_BEE_URL }} \
+            --stamp ${{ secrets.PRIVATE_POSTAGE_BATCH_ID }} \
+            --redundancy PARANOID \
+            --pin

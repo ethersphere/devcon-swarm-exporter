@@ -1,4 +1,4 @@
-export const WebsiteUrls = [`https://devcon.org/`, `https://devcon.org/es/`];
+export const WebsiteUrls = [`https://devcon.org/`, `https://devcon.org/es/`,`https://devcon.org/en/`];
 export const DevconFolder = "./output/devcon-local";
 export const CacheDir = "./output/cache";
 export const OptimizedImageDir = "next_image";

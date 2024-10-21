@@ -43,12 +43,14 @@ export const cloneWebsite = async (fresh = false) => {
       let args = [
         WebsiteUrls[0],
         WebsiteUrls[1],
+        WebsiteUrls[2],
         "-O",
         DevconFolder,
         "-N100",
         "-I0",
         "--near",
         "-v",
+        "-r0"
       ];
       try {
         const exitCode = await execCommand(command, args);
