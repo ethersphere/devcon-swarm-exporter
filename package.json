@@ -1,0 +1,29 @@
+{
+  "name": "devcon-static-exporter",
+  "version": "0.0.1",
+  "description": "",
+  "main": "src/index.ts",
+  "scripts": {
+    "start": "tsx src/index.ts",
+    "clone": "tsx src/index.ts clone-fresh",
+    "export": "tsx src/index.ts export",
+    "serve": "npx serve ./output/devcon-local"
+  },
+  "keywords": ["Swarm","Devcon","Nextjs","Static","Export"],
+  "author": "rampall",
+  "license": "ISC",
+  "devDependencies": {
+    "tsx": "^4.19.1",
+    "typescript": "^5.6.2"
+  },
+  "dependencies": {
+    "commander": "^12.1.0",
+    "fs-extra": "^11.2.0",
+    "glob": "^11.0.0",
+    "node-libcurl": "^4.0.0",
+    "picocolors": "^1.1.0",
+    "replace-in-file": "^8.1.0",
+    "sharp": "^0.33.5",    
+    "zx": "^8.1.7"
+  }
+}
