@@ -34,7 +34,6 @@ export async function removeImgSrcSet(lines: string[], file: string) {
     };
     try {
       const results = replaceInFileSync(options);
-      console.log("Replacement results:", results);
     } catch (error) {
       console.error("Error occurred:", error);
     }
@@ -61,7 +60,6 @@ export async function rewriteImgSrcSet(lines: string[], file: string) {
       await sharp2webp(imgFile, targetFile, 25, parseInt(w))
       try {
         const results = replaceInFileSync(options);
-        console.log("Replacement results:", results);
       } catch (error) {
         console.error("Error occurred:", error);
       }
@@ -143,7 +141,6 @@ export async function fetchAndRewriteImgUrl(src: string, file: string) {
 
   try {
     const results = replaceInFileSync(options);
-    console.log("Replacement results:", results);
   } catch (error) {
     console.error("Error occurred:", error);
   }
@@ -237,7 +234,7 @@ export const downloadMissingChunks = async () => {
       .split("\n")
       .filter((v) => v.trim().endsWith(".js"));
     for (let file of files) {
-      console.log({ cmd: `grep -o 'static/chunks' ${file}`, file });
+      console.log(`grep -o 'static/chunks' ${file}`);
       const out = (await $`grep -o 'static/chunks[^"]*' ${file}`).stdout;
       const lines = out.trim().split("\n");
       let res: any = {};
@@ -375,7 +372,6 @@ export const removePreloadImages = async () => {
       };
       try {
         const results = replaceInFileSync(options);
-        console.log("Replacement results:", results);
       } catch (error) {
         console.error("Error occurred:", error);
       }
@@ -556,7 +552,6 @@ export const updateNextStaticImages = async (file: string) => {
       };
       try {
         const results = replaceInFileSync(options);
-        console.log("Replacement results:", results);
       } catch (error) {
         console.error("Error occurred:", error);
       }
@@ -630,7 +625,6 @@ export const updateAllTinaAssets = async () => {
       };
       try {
         const results = replaceInFileSync(options);
-        console.log("Replacement results:", results);
       } catch (error) {
         console.error("Error occurred:", error);
       }
@@ -680,7 +674,6 @@ export const updateTicketsUrl = async () => {
     };
     try {
       const results = replaceInFileSync(options);
-      console.log("Replacement  results:", results);
     } catch (error) {
       console.error("Error occurred:", error);
     }
@@ -708,7 +701,6 @@ export const updateAllGoogleStorageAssets = async () => {
       };
       try {
         const results = replaceInFileSync(options);
-        console.log("Replacement results:", results);
       } catch (error) {
         console.error("Error occurred:", error);
       }
