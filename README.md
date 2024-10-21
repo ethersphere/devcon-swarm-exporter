@@ -51,7 +51,7 @@ Options:
 Commands:
   clone           Clone the website devcon.org using httrack
   clone-fresh     Deletes existing folder and clones the website devcon.org using httrack
-  make-static     Fetch all dynamic next/image URLs and rewrite to use optimized images
+  export          Build an optimised static export
   help [command]  display help for command
 ```
 ### Running CLI commands
