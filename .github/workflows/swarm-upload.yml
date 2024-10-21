@@ -19,6 +19,7 @@ jobs:
         run: |
           npm ci
           npm run clone
+          npm run export
       # Install swarm-cli globally
       - name: Install swarm-cli
         run: npm install -g @ethersphere/swarm-cli
