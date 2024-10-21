@@ -49,8 +49,7 @@ export const cloneWebsite = async (fresh = false) => {
         "-N100",
         "-I0",
         "--near",
-        "-v",
-        "-r0"
+        "-v"
       ];
       try {
         const exitCode = await execCommand(command, args);
