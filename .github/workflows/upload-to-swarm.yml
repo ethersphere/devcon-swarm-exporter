@@ -1,4 +1,4 @@
-name: Upload to Swarm
+name: Upload to Swarm w swarm-cli
 
 on:
   workflow_dispatch:
