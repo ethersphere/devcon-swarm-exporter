@@ -21,7 +21,7 @@ jobs:
           npm run clone
           npm run export
       - name: Upload to Swarm
-        uses: ethersphere/swarm-actions/upload-dir@v0
+        uses: ethersphere/swarm-actions/upload-dir@v1
         id: upload
         with:
           dir: ./output/devcon-local
@@ -29,7 +29,7 @@ jobs:
           bee-url: ${{ secrets.PRIVATE_BEE_URL }}
 
       - name: Setup feed
-        uses: ethersphere/swarm-actions/write-feed@v0
+        uses: ethersphere/swarm-actions/write-feed@v1
         id: feed
         with:
           reference: ${{ steps.upload.outputs.reference }}
@@ -38,7 +38,7 @@ jobs:
           bee-url: ${{ secrets.PRIVATE_BEE_URL }}
           signer: ${{ secrets.PRIVATE_SIGNER }}
 
-      - uses: ethersphere/swarm-actions/reference-to-cid@v0
+      - uses: ethersphere/swarm-actions/reference-to-cid@v1
         id: cid
         with:
           reference: ${{ steps.feed.outputs.manifest }}
