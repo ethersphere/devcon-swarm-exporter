@@ -1,0 +1,71 @@
+# Same shape as devcon-swarm-exporter `.github/workflows/swarm-upload.yml`:
+# manual or scheduled run, build the static mirror, upload to Swarm + feed update.
+name: Upload mirror to Swarm
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '15 5 * * *'
+
+concurrency:
+  group: swarm-upload-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+    env:
+      # Optional repo variable: set MAX_PAGES in Settings → Variables to cap crawl size in CI.
+      MAX_PAGES: ${{ vars.MAX_PAGES }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright Chromium (system deps + browser)
+        run: npx playwright install chromium --with-deps
+
+      - name: Crawl devcon.org into ./mirror
+        run: npm run crawl
+        env:
+          RESUME: '0'
+
+      - name: Upload to Swarm
+        uses: ethersphere/swarm-actions/upload-dir@v1
+        id: upload
+        with:
+          dir: ./mirror
+          index-document: index.html
+          postage-batch-id: ${{ secrets.PRIVATE_POSTAGE_BATCH_ID }}
+          bee-url: ${{ secrets.PRIVATE_BEE_URL }}
+
+      - name: Setup feed
+        uses: ethersphere/swarm-actions/write-feed@v1
+        id: feed
+        with:
+          reference: ${{ steps.upload.outputs.reference }}
+          topic: devcon-export-mirror
+          postage-batch-id: ${{ secrets.PRIVATE_POSTAGE_BATCH_ID }}
+          bee-url: ${{ secrets.PRIVATE_BEE_URL }}
+          signer: ${{ secrets.PRIVATE_SIGNER }}
+
+      - uses: ethersphere/swarm-actions/reference-to-cid@v1
+        id: cid
+        with:
+          reference: ${{ steps.feed.outputs.manifest }}
+
+      - name: Summary
+        run: |
+          echo 'Chunk reference: ${{ steps.upload.outputs.reference }}'
+          echo 'Feed reference: ${{ steps.feed.outputs.reference }}'
+          echo 'Feed manifest: ${{ steps.feed.outputs.manifest }}'
+          echo "Feed bzz.link: https://${{ steps.cid.outputs.cid }}.bzz.link"

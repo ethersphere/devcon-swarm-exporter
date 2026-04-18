@@ -1,0 +1,24 @@
+{
+  "name": "devcon-export",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Local mirror of devcon.org using Crawlee (see plan.md)",
+  "scripts": {
+    "crawl": "tsx src/main.ts",
+    "postinstall": "playwright install chromium"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "cheerio": "^1.0.0",
+    "crawlee": "^3.12.0",
+    "playwright": "^1.49.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.7.0"
+  }
+}
