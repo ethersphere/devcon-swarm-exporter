@@ -4,8 +4,6 @@ name: Upload mirror to Swarm
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: '15 5 * * *'
 
 concurrency:
   group: swarm-upload-${{ github.ref }}
